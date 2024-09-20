@@ -1,0 +1,2 @@
+# Dotfiles using GNU Stow
+

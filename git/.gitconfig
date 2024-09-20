@@ -1,0 +1,26 @@
+# This is Git's per-user configuration file.
+[user]
+  email = 2-rutger@users.noreply.codepot.nl
+  name = Rutger
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRFsRZDmFKkMLp6RI42G7oP49C4HvIICvraXkcMT0W0
+[core]
+  excludesfile = /Users/rutger/.gitignore_global
+[include]
+  path = /Users/rutger/.gitalias.txt
+
+[init]
+  defaultBranch = main
+
+[push]
+  autoSetupRemote = true
+
+# 1Password additions
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
+
