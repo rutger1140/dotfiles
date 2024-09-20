@@ -1,39 +1,62 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.5",
+		tag = "0.1.6",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		cmd = { "Telescope" }, -- Load when the `Telescope` command is used
 		config = function()
-			local telescope = require("telescope")
-			local builtin = require("telescope.builtin")
-
-			-- Configuratie voor telescope met aangepaste find_command
-			telescope.setup({
+			-- Setup Telescope with the specified commands
+			require("telescope").setup({
 				defaults = {
-					vimgrep_arguments = {
-						"rg",
-						"--color=never",
-						"--no-heading",
-						"--with-filename",
-						"--line-number",
-						"--column",
-						"--smart-case",
-						"--hidden",
-						"--glob",
-						"!.git/",
-					},
-					prompt_prefix = "> ",
-					selection_caret = "> ",
-					path_display = { "smart" },
+					-- Display path without leading './'
+					path_display = function(_, path)
+						return path:gsub("^%./", "")
+					end,
 				},
 			})
-
-			vim.keymap.set("n", "<C-p>", function()
-				builtin.find_files({ search_dirs = { vim.fn.getcwd() } })
-			end, { desc = "Find files" })
-
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
 		end,
+		keys = { -- Load on these key mappings
+			{
+				"<C-p>",
+				function()
+					require("telescope.builtin").find_files({
+						hidden = true,
+						find_command = {
+							"rg",
+							"--files",
+							"--hidden",
+							"--glob=!.git/**",
+							"--glob=!node_modules/**",
+							"--glob=!tmp/**",
+						},
+					})
+				end,
+				{ noremap = true, silent = true },
+			},
+			{
+				"<leader>fg",
+				function()
+					require("telescope.builtin").live_grep({
+						additional_args = function()
+							return { "--hidden" }
+						end,
+						vimgrep_arguments = {
+							"rg",
+							"--color=never",
+							"--no-heading",
+							"--with-filename",
+							"--line-number",
+							"--column",
+							"--smart-case",
+							"--glob=!.git/**",
+							"--glob=!node_modules/**",
+							"--glob=!tmp/**",
+						},
+					})
+				end,
+				{ noremap = true, silent = true },
+			},
+		},
 	},
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
