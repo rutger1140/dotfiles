@@ -6,6 +6,15 @@ local opts = { noremap = true, silent = true }
 -- Change leader to space
 vim.g.mapleader = " "
 
+-- Disable swapfile
+vim.opt.swapfile = false
+
+-- Navigate vim panes better
+vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
+vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
+vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
+vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+
 -- Save text to clipboard in visual mode by hitting ctrl-c
 map("v", "<C-c>", ":w !pbcopy<CR><CR>", opts)
 

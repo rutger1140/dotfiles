@@ -26,6 +26,10 @@ alias n="/opt/homebrew/bin/nvim"
 # Disable homebrew from updating other packages
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# Add nvm support
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+
 # Load FZF fuzzy seaching
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

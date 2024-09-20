@@ -59,21 +59,6 @@ opt.scrolloff = 8
 -- Backspace
 opt.backspace = 'indent,eol,start'
 
--- Disable autochdir if it's enabled
--- opt.autochdir = false
-
--- Custom autochdir functionality
--- vim.cmd [[
---   autocmd BufEnter * silent! lcd %:p:h
--- ]]
-
-
--- Clipboard
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
---opt.clipboard = "unnamed,unnamedplus"
-
 -- Split behavior
 opt.splitright = true
 opt.splitbelow = true
