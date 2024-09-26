@@ -21,14 +21,12 @@ if [ ! grep -q "Ubuntu" /etc/os-release]; then
   exit 1
 fi
 
-
 # Update package list
 echo "Updating package list..."
 sudo apt update
 
 echo "Installing base packages..."
-sudo apt install -y build-essential git curl wget stow \ 
-  apt-transport-https ca-certificates curl software-properties-common 
+sudo apt install -y build-essential git curl wget stow
 
 # Download dotfiles
 echo "Cloning dotfiles repository..."
@@ -38,16 +36,20 @@ cd dotfiles
 stow .
 
 echo "Installing development packages..."
-sudo apt install neovim tmux zsh htop tree nmap net-tools 
+sudo apt install -y neovim tmux zsh htop tree nmap net-tools 
 
 echo "Installing Sway packages..."
 sudo apt install -y sway swaylock swayidle waybar fuzzel 
 
 # Install 1Password
 echo "Installing 1Password..."
-curl -sS https://downloads.1password.com/linux/deb/stable | sudo bash
-sudo apt update
-sudo apt install -y 1password
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+echo 'deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
+curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
+sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+sudo apt update && sudo apt install -y 1password
 
 # Install Docker
 echo "Installing Docker..."
@@ -62,7 +64,7 @@ sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io \
   docker-buildx-plugin docker-compose-plugin
 sudo groupadd docker
-sudo usermod -aG docker $USER:w
+sudo usermod -aG docker $USER
 
 # Set shell to zsh
 chsh -s $(which zsh)
