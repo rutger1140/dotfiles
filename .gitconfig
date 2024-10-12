@@ -1,0 +1,36 @@
+[user]
+  email = 2-rutger@users.noreply.codepot.nl
+  name = Rutger
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRFsRZDmFKkMLp6RI42G7oP49C4HvIICvraXkcMT0W0
+
+[core]
+  excludesfile = /home/rutger/.gitignore_global
+
+[init]
+  defaultBranch = main
+
+[push]
+  autoSetupRemote = true
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/opt/1Password/op-ssh-sign"
+
+[commit]
+  gpgsign = true
+
+[alias]
+  a = add
+  b = branch
+  c = commit
+  d = diff
+  f = fetch
+  g = grep
+  l = log
+  m = merge
+  o = checkout
+  p = pull
+  s = status
+  w = whatchanged
