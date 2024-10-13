@@ -1,6 +1,6 @@
 # Dotfiles 
 
-Dotfiles setup using bare git method.
+Dotfiles setup using [bare git](https://wiki.archlinux.org/title/Dotfiles#Tracking_dotfiles_directly_with_Git) method.
 
 ## Init
 ```shell
