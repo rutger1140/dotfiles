@@ -1,0 +1,14 @@
+# Determine order of sshkey offerings for 1Password
+
+[[ssh-keys]]
+item = "Rutger SSH Key ed25519"
+vault = "Employee"
+
+[[ssh-keys]]
+vault = "Employee"
+
+[[ssh-keys]]
+vault = "Private"
+
+[[ssh-keys]]
+vault = "DevOps"
