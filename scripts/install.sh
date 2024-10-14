@@ -341,6 +341,10 @@ gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
 # Make it easy to resize undecorated windows
 gsettings set org.gnome.desktop.wm.keybindings begin-resize "['<Super>BackSpace']"
 
+# Clear default shortcuts for super+0-9
+# https://unix.stackexchange.com/questions/510375/super1-super2-super3-etc-keys-can-not-be-remapped-in-gnome/510376#comment1491533_510376
+for i in {0..9}; do dconf write "/org/gnome/shell/keybindings/switch-to-application-$i" "@as []"; done
+
 # Use super for workspaces
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-1 "['<Super>1']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-2 "['<Super>2']"
