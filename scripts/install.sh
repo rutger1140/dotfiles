@@ -121,11 +121,11 @@ sudo apt install -y mise
 
 # Install PHP + Composer
 ################
-sudo add-apt-repository -y "deb https://ppa.launchpadcontent.net/ondrej/php/ubuntu/ noble main"
-sudo apt -y install php8.3 php8.3-{curl,apcu,intl,mbstring,opcache,pgsql,mysql,sqlite3,redis,xml,zip}
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php --quiet && sudo mv composer.phar /usr/local/bin/composer
-rm composer-setup.php
+# sudo add-apt-repository -y "deb https://ppa.launchpadcontent.net/ondrej/php/ubuntu/ noble main"
+# sudo apt -y install php8.3 php8.3-{curl,apcu,intl,mbstring,opcache,pgsql,mysql,sqlite3,redis,xml,zip}
+# php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+# php composer-setup.php --quiet && sudo mv composer.phar /usr/local/bin/composer
+# rm composer-setup.php
 
 ########################################################
 # 3. Desktop
