@@ -1,5 +1,5 @@
 [user]
-  email = r+git@lemone.com
+  email = 2-rutger@users.noreply.codepot.nl
   name = Rutger
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRFsRZDmFKkMLp6RI42G7oP49C4HvIICvraXkcMT0W0
 
@@ -31,6 +31,7 @@
   l = log
   m = merge
   o = checkout
+  co = checkout
   p = pull
   s = status
   w = whatchanged
