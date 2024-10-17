@@ -25,3 +25,10 @@ mise use --global ruby@3.3
 mise use --global node@20
 ```
 
+# Ubuntu install script
+
+Start with:
+
+```shell
+bash <(wget -qO- https://raw.githubusercontent.com/rutger1140/dotfiles/main/scripts/install.sh)
+```
