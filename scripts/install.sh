@@ -163,6 +163,14 @@ Pin-Priority: 1000
 ' | sudo tee /etc/apt/preferences.d/mozilla
 sudo apt update -y && sudo apt install firefox -y
 
+# Install Slack
+################
+cd /tmp
+wget https://downloads.slack-edge.com/desktop-releases/linux/x64/4.40.133/slack-desktop-4.40.133-amd64.deb -O slack-desktop.deb
+sudo apt install -y ./slack-desktop.deb
+rm slack-desktop.deb
+cd -
+
 # Install flameshot
 ################
 # Flameshot is a nice step-up over the default Gnome screenshot tool
@@ -393,7 +401,6 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 ############################ 
 
 curl -sS https://starship.rs/install.sh | sh
-echo 'eval "$(starship init zsh)"' >> ~/.zshrc
 source ~/.zshrc
 
 # End timer
