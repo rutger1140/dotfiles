@@ -302,10 +302,10 @@ gsettings set org.gnome.shell.extensions.tactile col-2 1
 gsettings set org.gnome.shell.extensions.tactile col-3 0
 gsettings set org.gnome.shell.extensions.tactile row-0 1
 gsettings set org.gnome.shell.extensions.tactile row-1 1
-gsettings set org.gnome.shell.extensions.tactile gap-size 24
+gsettings set org.gnome.shell.extensions.tactile gap-size 10
 
 # Configure Just Perfection
-gsettings set org.gnome.shell.extensions.just-perfection animation 2
+gsettings set org.gnome.shell.extensions.just-perfection world-clock false
 gsettings set org.gnome.shell.extensions.just-perfection dash-app-running true
 gsettings set org.gnome.shell.extensions.just-perfection workspace true
 gsettings set org.gnome.shell.extensions.just-perfection workspace-popup false
@@ -315,7 +315,7 @@ gsettings set org.gnome.shell.extensions.blur-my-shell.appfolder blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.lockscreen blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.screenshot blur false
 gsettings set org.gnome.shell.extensions.blur-my-shell.window-list blur false
-gsettings set org.gnome.shell.extensions.blur-my-shell.panel blur false
+gsettings set org.gnome.shell.extensions.blur-my-shell.panel blur true
 gsettings set org.gnome.shell.extensions.blur-my-shell.overview blur true
 gsettings set org.gnome.shell.extensions.blur-my-shell.overview pipeline 'pipeline_default'
 gsettings set org.gnome.shell.extensions.blur-my-shell.dash-to-dock blur true
