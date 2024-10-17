@@ -123,13 +123,9 @@ echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] http
 sudo apt update
 sudo apt install -y mise
 
-# Install PHP + Composer
+# Install Lando
 ################
-# sudo add-apt-repository -y "deb https://ppa.launchpadcontent.net/ondrej/php/ubuntu/ noble main"
-# sudo apt -y install php8.3 php8.3-{curl,apcu,intl,mbstring,opcache,pgsql,mysql,sqlite3,redis,xml,zip}
-# php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-# php composer-setup.php --quiet && sudo mv composer.phar /usr/local/bin/composer
-# rm composer-setup.php
+/bin/bash -c "$(curl -fsSL https://get.lando.dev/setup-lando.sh)"
 
 # Clone repo for TPM tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

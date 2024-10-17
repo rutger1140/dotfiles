@@ -6,7 +6,7 @@
 export EDITOR="nvim"
 
 # Add bin to path
-export PATH="$HOME/bin/:$HOME/.local/bin/:$PATH"
+export PATH="$HOME/bin/:$HOME/.local/bin/:$HOME/.lando/bin:$PATH"
 
 ###########
 # Aliases #
@@ -60,3 +60,4 @@ fi
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
+
