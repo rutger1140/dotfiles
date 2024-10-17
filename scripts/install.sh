@@ -2,7 +2,7 @@
 
 ########################################################
 # System Installer for Ubuntu Development Machine
-# OS: Ubuntu 24.04
+# OS: Ubuntu 24.04 and 24.10
 # Date: 13-10-2024
 # Author: rutger1140
 ########################################################
@@ -19,7 +19,7 @@ start_time=$(date +%s)
 ################
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt install -y curl git unzip zsh
+sudo apt install -y curl git unzip zsh wget sudo
 
 ########################################################
 # 2. Terminal
@@ -44,6 +44,9 @@ if [ $? = 0 ]; then
 fi;
 dotfiles checkout
 dotfiles config status.showUntrackedFiles no
+
+# Set remote for dotfiles to allow future changes
+dotfiles remote set-url origin git@github.com:rutger1140/dotfiles.git
 
 source ~/.zshrc
 
@@ -107,12 +110,13 @@ sudo apt install -y \
   build-essential pkg-config autoconf bison clang rustc \
   libssl-dev libreadline-dev zlib1g-dev libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libjemalloc2 \
   libvips imagemagick libmagickwand-dev mupdf mupdf-tools gir1.2-gtop-2.0 gir1.2-clutter-1.0 \
-  redis-tools sqlite3 libsqlite3-0 libmysqlclient-dev libpq-dev postgresql-client postgresql-client-common
+  redis-tools sqlite3 libsqlite3-0 libmysqlclient-dev libpq-dev postgresql-client postgresql-client-common \
+  re2c libsqlite3-dev libcurl4-openssl-dev libgd-dev libonig-dev libzip-dev
 
 # Install mise
 ################
 # Install mise for managing multiple versions of languages. See https://mise.jdx.dev/
-sudo apt update -y && sudo apt install -y gpg sudo wget curl
+sudo apt update -y && sudo apt install -y gpg 
 sudo install -dm 755 /etc/apt/keyrings
 wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1>/dev/null
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
@@ -126,6 +130,9 @@ sudo apt install -y mise
 # php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 # php composer-setup.php --quiet && sudo mv composer.phar /usr/local/bin/composer
 # rm composer-setup.php
+
+# Clone repo for TPM tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 ########################################################
 # 3. Desktop
@@ -162,6 +169,7 @@ Pin: origin packages.mozilla.org
 Pin-Priority: 1000
 ' | sudo tee /etc/apt/preferences.d/mozilla
 sudo apt update -y && sudo apt install firefox -y
+# @TODO: Firefox needs to be started once to get things sorted out
 
 # Install Slack
 ################
@@ -384,8 +392,8 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 # Center new windows in the middle of the screen
 gsettings set org.gnome.mutter center-new-windows true
 
-# @TODO: Link MonoLisa nerdfont here ----Set Cascadia Mono as the default monospace font
-# gsettings set org.gnome.desktop.interface monospace-font-name 'CaskaydiaMono Nerd Font 10'
+# Set MonoLisa as the default monospace font
+gsettings set org.gnome.desktop.interface monospace-font-name 'MonoLisa Nerd Font 12'
 
 # Reveal week numbers in the Gnome calendar
 gsettings set org.gnome.desktop.calendar show-weekdate true
