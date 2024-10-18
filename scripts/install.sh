@@ -175,6 +175,15 @@ sudo apt install -y ./slack-desktop.deb
 rm slack-desktop.deb
 cd -
 
+# Install ProtonVPN
+################
+cd /tmp
+wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.4_all.deb -O protonvpn.deb
+sudo dpkg -i ./protonvpn.deb && sudo apt update -y
+sudo apt install proton-vpn-gnome-desktop -y
+rm protonvpn.deb
+cd -
+
 # Install flameshot
 ################
 # Flameshot is a nice step-up over the default Gnome screenshot tool
