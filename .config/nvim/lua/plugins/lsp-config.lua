@@ -13,7 +13,7 @@ return {
 					"lua_ls",
 					"tailwindcss",
 					"intelephense",
-					"ruby_ls",
+					"ruby_lsp",
 					"dockerls",
 					"docker_compose_language_service",
 					"html",
@@ -28,7 +28,7 @@ return {
 			lspconfig.lua_ls.setup({})
 			lspconfig.tailwindcss.setup({})
 			lspconfig.intelephense.setup({})
-			lspconfig.ruby_ls.setup({})
+			lspconfig.ruby_lsp.setup({})
 			lspconfig.dockerls.setup({})
 			lspconfig.docker_compose_language_service.setup({})
 			lspconfig.html.setup({})
