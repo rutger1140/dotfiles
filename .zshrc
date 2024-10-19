@@ -62,7 +62,5 @@ if command -v zoxide &> /dev/null; then
 fi
 
 # Setup fzf
-if command -v fzf &> /dev/null; then
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
