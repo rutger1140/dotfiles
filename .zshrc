@@ -61,3 +61,8 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
+# Setup fzf
+if command -v fzf &> /dev/null; then
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+fi
+

@@ -84,7 +84,13 @@ cd -
 
 # Install terminal tools
 ################
-sudo apt install -y fzf ripgrep bat eza zoxide plocate btop apache2-utils fd-find tldr tmux
+sudo apt install -y ripgrep bat eza zoxide plocate btop apache2-utils fd-find tldr tmux
+
+# Install fzf from source since APT version is outdated
+################
+cd 
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install --no-update-rc --no-bash --no-fish --completion --key-bindings
 
 # Install Docker
 ################
