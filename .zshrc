@@ -46,6 +46,12 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Init #
 ########
 
+# Oh My Zsh 
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
 # Go Starship
 if command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
@@ -59,6 +65,11 @@ fi
 # Setup Zoxide
 if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
+fi
+
+# Setup tmux on start if not in a tmux session
+if command -v tmux &> /dev/null && [[ -z "$TMUX" ]]; then
+  tmux attach || tmux new
 fi
 
 # Setup fzf
