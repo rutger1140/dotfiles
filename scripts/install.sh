@@ -54,6 +54,10 @@ source ~/.zshrc
 ################
 fc-cache -fv
 
+# Install Oh My Zsh
+################
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+
 # Install fastfetch
 ################
 sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
@@ -91,6 +95,9 @@ sudo apt install -y ripgrep bat eza zoxide plocate btop apache2-utils fd-find tl
 cd 
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --no-update-rc --no-bash --no-fish --completion --key-bindings
+
+# Set fzf in path to make ULauncher extension work
+sudo ln -s $(which fzf) /usr/bin/fzf
 
 # Install Docker
 ################
