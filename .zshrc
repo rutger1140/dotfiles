@@ -2,6 +2,12 @@
 # User configuration
 #
 
+# Oh My Zsh 
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+source $ZSH/oh-my-zsh.sh
+
 # Default editor
 export EDITOR="nvim"
 
@@ -29,6 +35,7 @@ alias ....='cd ../../..'
 
 # Tools
 alias n='nvim'
+alias vim='nvim'
 alias g='git'
 alias bat='batcat'
 alias lzg='lazygit'
@@ -46,11 +53,6 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Init #
 ########
 
-# Oh My Zsh 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
-plugins=(git)
-source $ZSH/oh-my-zsh.sh
 
 # Go Starship
 if command -v starship &> /dev/null; then
