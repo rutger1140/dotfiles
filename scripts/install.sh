@@ -109,6 +109,11 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # Set fzf in path to make ULauncher extension work
 sudo ln -s $(which fzf) /usr/bin/fzf
 
+# Install tmuxifier
+################
+cd
+git clone https://github.com/jimeh/tmuxifier.git ~/.tmuxifier
+
 # Install Docker
 ################
 # Add the official Docker repo
