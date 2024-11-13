@@ -12,7 +12,7 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR="nvim"
 
 # Add bin to path
-export PATH="$HOME/bin/:$HOME/.local/bin/:$HOME/.lando/bin:$PATH"
+export PATH="$HOME/bin/:$HOME/.local/bin/:$HOME/.lando/bin:$HOME/.tmuxifier/bin:$PATH"
 
 ###########
 # Aliases #
@@ -27,6 +27,7 @@ alias lta='lt -a'
 alias ff="fzf --preview 'batcat --style=numbers --color=always {}'"
 alias fd='fdfind'
 alias cd='z'
+alias tmf='tmuxifier'
 
 # Directories
 alias ..='cd ..'
@@ -40,6 +41,7 @@ alias g='git'
 alias bat='batcat'
 alias lzg='lazygit'
 alias lzd='lazydocker'
+alias sail='./vendor/bin/sail'
 
 # Yarn
 alias y="yarn"
@@ -52,7 +54,6 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ########
 # Init #
 ########
-
 
 # Go Starship
 if command -v starship &> /dev/null; then
@@ -69,9 +70,14 @@ if command -v zoxide &> /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# Setup tmux on start if not in a tmux session
-if command -v tmux &> /dev/null && [[ -z "$TMUX" ]]; then
-  tmux attach || tmux new
+# # Setup tmux on start if not in a tmux session
+# if command -v tmux &> /dev/null && [[ -z "$TMUX" ]]; then
+#   tmux attach || tmux new
+# fi
+
+# Setup tmuxifier
+if command -v tmuxifier &> /dev/null; then
+ eval "$(tmuxifier init -)"
 fi
 
 # Setup fzf
