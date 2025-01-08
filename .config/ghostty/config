@@ -1,0 +1,56 @@
+# Colors
+background-opacity = "0.95"
+
+# Font
+font-family = "MonoLisa Variable"
+font-size = 11
+
+font-variation = wght=500
+font-variation-bold = wght=600
+font-variation-italic = wght=500
+font-variation-bold-italic = wght=600
+
+font-feature = zero
+font-feature = -calt
+font-feature = ss02
+font-feature = ss07
+font-feature = ss08	
+font-feature = ss09
+font-feature = ss11
+font-feature = ss13
+font-feature = ss14
+font-feature = ss15
+font-feature = ss16
+font-feature = ss17
+
+# Window dressing
+gtk-titlebar = false
+window-padding-x = 5
+window-padding-y = 5,0
+window-decoration = false
+
+# Theme
+theme = catppuccin-macchiato
+bold-is-bright = true
+background = #24273a
+foreground = #cad3f5
+selection-background = #5b6078
+selection-foreground = #cad3f5
+cursor-color = #f4dbd6
+cursor-text = #cad3f5
+palette = 0=#494d64
+palette = 1=#ed8796
+palette = 2=#a6da95
+palette = 3=#eed49f
+palette = 4=#8aadf4
+palette = 5=#f5bde6
+palette = 6=#8bd5ca
+palette = 7=#a5adcb
+palette = 8=#5b6078
+palette = 9=#ec7486
+palette = 10=#8ccf7f
+palette = 11=#e1c682
+palette = 12=#78a1f6
+palette = 13=#f2a9dd
+palette = 14=#63cbc0
+palette = 15=#b8c0e0
