@@ -100,6 +100,9 @@ cd -
 ################
 sudo apt install -y ripgrep bat eza zoxide plocate btop apache2-utils fd-find tldr tmux
 
+# Clone repo for TPM tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # Install fzf from source since APT version is outdated
 ################
 cd 
@@ -155,9 +158,6 @@ sudo apt install -y mise
 ################
 /bin/bash -c "$(curl -fsSL https://get.lando.dev/setup-lando.sh)"
 
-# Clone repo for TPM tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
 ########################################################
 # 3. Desktop
 ########################################################
@@ -179,6 +179,13 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install -y ./google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 cd -
+
+# Install Brave Browser
+################
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt update -y
+sudo apt install -y brave-browser
 
 # Install Firefox via .deb package
 ################
@@ -264,13 +271,6 @@ sudo apt install -y code
 ################
 sudo apt install -y xournalpp
 
-# Install ulauncher
-################
-sudo add-apt-repository universe -y
-sudo add-apt-repository ppa:agornostal/ulauncher -y 
-sudo apt update -y
-sudo apt install -y ulauncher
-
 # Install 1Password
 ################
 # Install 1password and 1password-cli single script
@@ -310,7 +310,6 @@ pipx ensurepath
 
 # Turn off default Ubuntu extensions
 gnome-extensions disable tiling-assistant@ubuntu.com
-gnome-extensions disable ubuntu-appindicators@ubuntu.com
 gnome-extensions disable ubuntu-dock@ubuntu.com
 gnome-extensions disable ding@rastersoft.com
 
@@ -323,6 +322,7 @@ gext install undecorate@sun.wxg@gmail.com
 gext install tophat@fflewddur.github.io
 gext install AlphabeticalAppGrid@stuarthayhurst
 gext install caffeine@patapon.info
+gext install search-light@icedman.github.com
 
 # Compile gsettings schemas in order to be able to set them
 sudo cp ~/.local/share/gnome-shell/extensions/tactile@lundal.io/schemas/org.gnome.shell.extensions.tactile.gschema.xml /usr/share/glib-2.0/schemas/
@@ -412,12 +412,6 @@ gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-9 "['<Super>9
 
 # Reserve slots for custom keybindings
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-
-# Set ulauncher to Super+Space
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source "@as []"
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'ulauncher-toggle'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'ulauncher-toggle'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>space'
 
 # Set flameshot (with the sh fix for starting under Wayland) on alternate print screen key
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'Flameshot'
