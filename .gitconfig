@@ -9,8 +9,23 @@
 [init]
   defaultBranch = main
 
+[column]
+  ui = auto
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = version:refname
+
 [push]
   autoSetupRemote = true
+  followTags = true
+
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
 
 [gpg]
   format = ssh
@@ -20,6 +35,7 @@
 
 [commit]
   gpgsign = true
+  verbose = true
 
 [alias]
   a = add
@@ -35,6 +51,12 @@
   p = pull
   s = status
   w = whatchanged
+
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 
 [merge]
   tool = nvim
