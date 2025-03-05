@@ -110,7 +110,7 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --no-update-rc --no-bash --no-fish --completion --key-bindings
 
 # Set fzf in path to make ULauncher extension work
-sudo ln -s $(which fzf) /usr/bin/fzf
+sudo ln -s $(which fzf) /usr/local/bin/fzf
 
 # Install tmuxifier
 ################
@@ -134,7 +134,6 @@ sudo usermod -aG docker ${USER}
 
 # Limit log size to avoid running out of disk
 echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' | sudo tee /etc/docker/daemon.json
-
 # Install dev libraries
 ################
 sudo apt install -y \
@@ -451,10 +450,11 @@ gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 ############################ 
-# Change shell to fish and install and load starship
+# Install and load starship 
 ############################ 
-
 curl -sS https://starship.rs/install.sh | sh
+
+# Reload fish
 exec fish
 
 # End timer

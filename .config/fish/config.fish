@@ -79,12 +79,12 @@ end
 
 # Setup tmuxifier
 if type -q tmuxifier
-    eval (tmuxifier init -)
+  eval (tmuxifier init -)
 end
 
 # Setup fzf
-if test -f ~/.fzf.fish
-    source ~/.fzf.fish
+if command -v fzf > /dev/null 
+  fzf --fish | source
 end
 
 # convert webm2mp4 
@@ -94,9 +94,3 @@ function webm2mp4
   ffmpeg -i "$input_file" -vf "scale='trunc(iw/2)*2:trunc(ih/2)*2'" -c:v libx264 -preset slow -crf 22 -c:a aac -b:a 192k "$output_file"
 end
 
-# Setup tmux on start if not in a tmux session (optioneel)
-# if type -q tmux
-#     if test -z "$TMUX"
-#         tmux attach || tmux new
-#     end
-# end
