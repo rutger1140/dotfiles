@@ -14,19 +14,22 @@ echo "########################################################"
 # Start timer
 start_time=$(date +%s)
 
-################
+##################
 # 1. Update system
-################
+##################
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt install -y curl git unzip zsh wget sudo
+sudo apt install -y curl git unzip fish wget sudo
 
 ########################################################
 # 2. Terminal
 ########################################################
 
+# Install fish shell
+sudo apt install fish -y
+
 # Switch to zshell
-chsh -s $(which zsh)
+chsh -s $(which fish)
 
 # Setup dotfiles
 ################
@@ -48,36 +51,33 @@ dotfiles config status.showUntrackedFiles no
 # Set remote for dotfiles to allow future changes
 dotfiles remote set-url origin git@github.com:rutger1140/dotfiles.git
 
-source ~/.zshrc
+# Load fish config
+source ~/.config/fish/config.fish
+exec fish
 
 # Rebuild font cache 
-################
+####################
 fc-cache -fv
 
-# Install Oh My Zsh
-################
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
-
 # Install fastfetch
-################
+###################
 sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
 sudo apt update -y
 sudo apt install -y fastfetch
 
 # Install neovim
 ################
-cd -
 cd /tmp
-wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+wget -O nvim.tar.gz "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz"
 tar -xf nvim.tar.gz
-sudo install nvim-linux64/bin/nvim /usr/local/bin/nvim
-sudo cp -R nvim-linux64/lib /usr/local/
-sudo cp -R nvim-linux64/share /usr/local/
-rm -rf nvim-linux64 nvim.tar.gz
-
+sudo install nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim
+sudo cp -R nvim-linux-x86_64/lib /usr/local/
+sudo cp -R nvim-linux-x86_64/share /usr/local/
+rm -rf nvim-linux-x86_64 nvim.tar.gz
+cd -
 
 # Install lazygit
-################
+#################
 cd /tmp
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 curl -sLo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -87,7 +87,7 @@ rm lazygit.tar.gz lazygit
 cd -
 
 # Install lazydocker
-################
+####################
 cd /tmp
 LAZYDOCKER_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazydocker/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 curl -sLo lazydocker.tar.gz "https://github.com/jesseduffield/lazydocker/releases/latest/download/lazydocker_${LAZYDOCKER_VERSION}_Linux_x86_64.tar.gz"
@@ -97,7 +97,7 @@ rm lazydocker.tar.gz lazydocker
 cd -
 
 # Install terminal tools
-################
+########################
 sudo apt install -y ripgrep bat eza zoxide plocate btop apache2-utils fd-find tldr tmux
 
 # Clone repo for TPM tmux
@@ -135,7 +135,7 @@ sudo usermod -aG docker ${USER}
 # Limit log size to avoid running out of disk
 echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' | sudo tee /etc/docker/daemon.json
 
-# Install libraries
+# Install dev libraries
 ################
 sudo apt install -y \
   build-essential pkg-config autoconf bison clang rustc \
@@ -143,6 +143,9 @@ sudo apt install -y \
   libvips imagemagick libmagickwand-dev mupdf mupdf-tools gir1.2-gtop-2.0 gir1.2-clutter-1.0 \
   redis-tools sqlite3 libsqlite3-0 libmysqlclient-dev libpq-dev postgresql-client postgresql-client-common \
   re2c libsqlite3-dev libcurl4-openssl-dev libgd-dev libonig-dev libzip-dev
+
+# Install fprintd for fingerprint reader
+sudo apt install fprintd libpam-fprintd -y
 
 # Install mise
 ################
@@ -163,17 +166,17 @@ sudo apt install -y mise
 ########################################################
 
 # Install flatpak
-################
+#################
 sudo apt install -y flatpak
 sudo apt install -y gnome-software-plugin-flatpak
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Install kitty
-################
-sudo apt install -y kitty
+# Install Ghostty
+#################
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 
 # Install Google Chrome
-################
+#######################
 cd /tmp
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install -y ./google-chrome-stable_current_amd64.deb
@@ -181,14 +184,14 @@ rm google-chrome-stable_current_amd64.deb
 cd -
 
 # Install Brave Browser
-################
+#######################
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update -y
 sudo apt install -y brave-browser
 
 # Install Firefox via .deb package
-################
+##################################
 # https://support.mozilla.org/en-US/kb/install-firefox-linux
 
 sudo snap remove firefox
@@ -203,15 +206,15 @@ sudo apt update -y && sudo apt install firefox -y
 # @TODO: Firefox needs to be started once to get things sorted out
 
 # Install Slack
-################
+###############
 cd /tmp
-wget https://downloads.slack-edge.com/desktop-releases/linux/x64/4.40.133/slack-desktop-4.40.133-amd64.deb -O slack-desktop.deb
+wget https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.105/slack-desktop-4.41.105-amd64.deb -O slack-desktop.deb
 sudo apt install -y ./slack-desktop.deb
 rm slack-desktop.deb
 cd -
 
 # Install ProtonVPN
-################
+###################
 cd /tmp
 wget https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.4_all.deb -O protonvpn.deb
 sudo dpkg -i ./protonvpn.deb && sudo apt update -y
@@ -246,6 +249,10 @@ cd -
 ################
 # Obsidian is a multi-platform note taking application. See https://obsidian.md
 flatpak install -y flathub md.obsidian.Obsidian
+
+# Install smile
+###############
+flatpak install -y flathub it.mijorus.smile
 
 # Install Pinta - photoshop alternative
 ################
@@ -323,6 +330,8 @@ gext install tophat@fflewddur.github.io
 gext install AlphabeticalAppGrid@stuarthayhurst
 gext install caffeine@patapon.info
 gext install search-light@icedman.github.com
+gext install smile-extension@mijorus.it
+gext install soft-brightness-plus@joelkitching.com
 
 # Compile gsettings schemas in order to be able to set them
 sudo cp ~/.local/share/gnome-shell/extensions/tactile@lundal.io/schemas/org.gnome.shell.extensions.tactile.gschema.xml /usr/share/glib-2.0/schemas/
@@ -418,6 +427,14 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'sh -c -- "flameshot gui"'
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Control>Print'
 
+# Set smile emoji selector to super E
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ name 'Smile'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ command 'flatpak run it.mijorus.smile'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/ binding '<Super>E'
+
+# Set compose key to right alt and capslock to control
+gsettings set org.gnome.desktop.input-sources xkb-options "['compose:ralt', 'ctrl:nocaps']"
+
 ############################ 
 # Set Gnome settings
 ############################ 
@@ -434,11 +451,11 @@ gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 ############################ 
-# Change shell to zsh and install and load starship
+# Change shell to fish and install and load starship
 ############################ 
 
 curl -sS https://starship.rs/install.sh | sh
-source ~/.zshrc
+exec fish
 
 # End timer
 end_time=$(date +%s)
