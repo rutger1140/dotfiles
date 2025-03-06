@@ -45,4 +45,4 @@ SETUVAR fish_pager_color_selected_background:\x1d
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/home/rutger/bin\x1e/home/rutger/\x2elocal/bin\x1e/home/rutger/\x2elando/bin\x1e/home/rutger/\x2etmuxifier/bin\x1e/home/rutger/\x2eoh\x2dmy\x2dzsh
+SETUVAR fish_user_paths:/home/rutger/bin\x1e/home/rutger/\x2elocal/bin\x1e/home/rutger/\x2elando/bin\x1e/home/rutger/\x2etmuxifier/bin\x1e/home/rutger/\x2eoh\x2dmy\x2dzsh\x1e/home/rutger/\x2efzf/bin
