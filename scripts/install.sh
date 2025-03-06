@@ -341,6 +341,7 @@ sudo cp ~/.local/share/gnome-shell/extensions/space-bar\@luchrioh/schemas/org.gn
 sudo cp ~/.local/share/gnome-shell/extensions/tophat@fflewddur.github.io/schemas/org.gnome.shell.extensions.tophat.gschema.xml /usr/share/glib-2.0/schemas/
 sudo cp ~/.local/share/gnome-shell/extensions/AlphabeticalAppGrid\@stuarthayhurst/schemas/org.gnome.shell.extensions.AlphabeticalAppGrid.gschema.xml /usr/share/glib-2.0/schemas/
 sudo cp ~/.local/share/gnome-shell/extensions/caffeine@patapon.info/schemas/org.gnome.shell.extensions.caffeine.gschema.xml /usr/share/glib-2.0/schemas/
+sudo cp ~/.local/share/gnome-shell/extensions/search-light@icedman.github.com/schemas/org.gnome.shell.extensions.search-light.gschema.xml /usr/share/glib-2.0/schemas/
 sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 # Configure Tactile
@@ -391,6 +392,13 @@ gsettings set org.gnome.shell.extensions.alphabetical-app-grid folder-order-posi
 # Configure Caffeine
 gsettings set org.gnome.shell.extensions.caffeine show-indicator 'always'
 
+# Configure SearchLight
+gsettings set org.gnome.shell.extensions.search-light shortcut-search "['<Super>space']" 
+gsettings set org.gnome.shell.extensions.search-light scale-height 0.20
+gsettings set org.gnome.shell.extensions.search-light scale-width 0.40
+gsettings set org.gnome.shell.extensions.search-light background-color '(0.0, 0.0, 0.0, 0.5)'
+gsettings set org.gnome.shell.extensions.search-light border-radius '1'
+
 ############################ 
 # Set Gnome keyboard shortcuts
 ############################ 
@@ -434,6 +442,10 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 
 # Set compose key to right alt and capslock to control
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:ralt', 'ctrl:nocaps']"
+
+# Free mapping of super+space so search-light can use it
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source "@as []"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backwards "@as []"
 
 ############################ 
 # Set Gnome settings
