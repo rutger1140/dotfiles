@@ -29,7 +29,7 @@ sudo apt install -y curl git unzip fish wget sudo
 sudo apt install fish -y
 
 # Switch to zshell
-chsh -s $(which fish)
+sudo chsh -s $(which fish)
 
 # Setup dotfiles
 ################
@@ -52,8 +52,8 @@ dotfiles config status.showUntrackedFiles no
 dotfiles remote set-url origin git@github.com:rutger1140/dotfiles.git
 
 # Load fish config
-source ~/.config/fish/config.fish
-exec fish
+#source ~/.config/fish/config.fish
+#exec fish
 
 # Rebuild font cache 
 ####################
@@ -134,6 +134,7 @@ sudo usermod -aG docker ${USER}
 
 # Limit log size to avoid running out of disk
 echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' | sudo tee /etc/docker/daemon.json
+#
 # Install dev libraries
 ################
 sudo apt install -y \
@@ -158,7 +159,7 @@ sudo apt install -y mise
 
 # Install Lando
 ################
-/bin/bash -c "$(curl -fsSL https://get.lando.dev/setup-lando.sh)"
+/bin/bash -c "$(curl -fsSL https://get.lando.dev/setup-lando.sh)" -s -- -y
 
 ########################################################
 # 3. Desktop
@@ -453,9 +454,6 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 # Install and load starship 
 ############################ 
 curl -sS https://starship.rs/install.sh | sh
-
-# Reload fish
-exec fish
 
 # End timer
 end_time=$(date +%s)
