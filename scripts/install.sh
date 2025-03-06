@@ -309,6 +309,12 @@ rm signal-desktop-keyring.gpg
 sudo apt update
 sudo apt install -y signal-desktop
 
+# Install TransIP Stack client
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/transip-stack.gpg] https://filehosting-client.transip.nl/packages/stack-ubuntu-24.04/ main client' | sudo tee /etc/apt/sources.list.d/stack-client.list
+sudo wget -O /usr/share/keyrings/transip-stack.gpg https://filehosting-client.transip.nl/transip-stack.gpg
+sudo apt update
+sudo apt install -y stack-client
+
 # Set Gnome Extensions
 ############## 
 sudo apt install -y gnome-shell-extension-manager pipx
