@@ -2,9 +2,10 @@
 
 ########################################################
 # System Installer for Ubuntu Development Machine
-# OS: Ubuntu 24.04 and 24.10
 # Date: 13-10-2024
+# OS: Ubuntu 24.04
 # Author: rutger1140
+# Inspired by: omakub.org
 ########################################################
 
 echo "########################################################"
@@ -472,6 +473,13 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 # Install and load starship 
 ############################ 
 curl -sS https://starship.rs/install.sh | sh
+
+############################
+# Setup Dutch locale - only for Dutch users
+############################
+sudo locale-gen nl_NL.UTF-8
+sudo update-locale
+gsettings set org.gnome.system.locale region 'nl_NL.UTF-8'
 
 # End timer
 end_time=$(date +%s)
