@@ -4,5 +4,5 @@ return {
   },
   {
     "airblade/vim-gitgutter",
-  }
+  },
 }

@@ -6,6 +6,6 @@ return {
     require("catppuccin").setup({
       transparent_background = true,
     })
-    vim.cmd.colorscheme "catppuccin-mocha"
-  end
+    vim.cmd.colorscheme("catppuccin-mocha")
+  end,
 }

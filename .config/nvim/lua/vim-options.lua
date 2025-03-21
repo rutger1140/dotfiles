@@ -33,13 +33,13 @@ opt.hlsearch = true
 opt.cursorline = true
 
 -- Enable mouse mode
-opt.mouse = 'a'
+opt.mouse = "a"
 
 -- Save undo history
 opt.undofile = true
 
 -- Keep signcolumn on by default
-opt.signcolumn = 'yes'
+opt.signcolumn = "yes"
 
 -- Decrease update time
 opt.updatetime = 250
@@ -50,14 +50,14 @@ opt.completeopt = { "menuone", "noselect" }
 
 -- Appearance
 opt.termguicolors = true
-opt.background = 'dark'
-opt.signcolumn = 'yes'
+opt.background = "dark"
+opt.signcolumn = "yes"
 
 -- Always keep 8 lines above/below cursor unless at start/end of file
 opt.scrolloff = 8
 
 -- Backspace
-opt.backspace = 'indent,eol,start'
+opt.backspace = "indent,eol,start"
 
 -- Split behavior
 opt.splitright = true
