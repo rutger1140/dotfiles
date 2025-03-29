@@ -2,7 +2,7 @@
 
 # Add fish greeting with fastfetch
 function fish_greeting
-  fastfetch
+  # fastfetch
 end
 
 # Default editor

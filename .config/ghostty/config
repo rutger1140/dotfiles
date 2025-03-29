@@ -32,7 +32,7 @@ font-feature = ss17
 gtk-titlebar = false
 window-padding-x = 5
 window-padding-y = 5,0
-window-decoration = false
+window-decoration = server
 cursor-style-blink = true
 
 # Theme
@@ -60,3 +60,4 @@ palette = 12=#78a1f6
 palette = 13=#f2a9dd
 palette = 14=#63cbc0
 palette = 15=#b8c0e0
+
