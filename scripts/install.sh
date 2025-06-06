@@ -162,6 +162,13 @@ sudo apt install -y mise
 ################
 /bin/bash -c "$(curl -fsSL https://get.lando.dev/setup-lando.sh)" -s -- -y
 
+# Install Gcloud SDK
+# ################
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
+sudo apt update
+sudo apt install -y google-cloud-cli
+
 ########################################################
 # 3. Desktop
 ########################################################
