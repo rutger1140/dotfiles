@@ -25,3 +25,12 @@ map("n", "<A-Down>", ":m .+1<CR>==", opts)
 -- Move multiple lines in visual mode
 map("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 map("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts)
+
+-- -- Move to previous/next
+map("n", "<A-.>", ":BufferLineCycleNext<CR>", opts)
+map("n", "<A-,>", ":BufferLineCyclePrev<CR>", opts)
+
+-- -- Re-order to previous/next
+-- map("n", "<A-<>", ":BufferMovePrevious<CR>", opts)
+-- map("n", "<A->>", ":BufferMoveNext<CR>", opts)
+--

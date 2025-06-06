@@ -52,6 +52,7 @@ opt.completeopt = { "menuone", "noselect" }
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
+opt.showtabline = 2 -- always show tabs
 
 -- Always keep 8 lines above/below cursor unless at start/end of file
 opt.scrolloff = 8
@@ -70,3 +71,8 @@ opt.splitbelow = true
 -- opt.foldlevel = 99
 -- opt.foldlevelstart = 99
 -- opt.foldenable = true
+--
+
+-- Commented until Telescope is patched
+-- https://github.com/nvim-telescope/telescope.nvim/issues/3436
+-- opt.winborder = 'rounded'
