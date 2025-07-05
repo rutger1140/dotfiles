@@ -9,7 +9,7 @@ end
 set -x EDITOR nvim
 
 # Add bin to path
-set -U fish_user_paths $HOME/bin $HOME/.local/bin $HOME/.lando/bin $HOME/.tmuxifier/bin $fish_user_paths
+set -U fish_user_paths $HOME/bin $HOME/.local/bin $HOME/.lando/bin $HOME/.tmuxifier/bin $HOME/.local/share/pam-auth-selector/bin $fish_user_paths
 
 ###########
 # Aliases #
@@ -33,7 +33,6 @@ alias .... "cd ../../.."
 
 # Tools
 alias n nvim
-alias vim nvim
 alias g git
 alias bat batcat
 alias lzg lazygit
@@ -66,15 +65,6 @@ end
 # Setup Zoxide
 if type -q zoxide
     zoxide init fish | source
-end
-
-# Link cd to z
-function cd
-    if test (count $argv) -eq 0
-        z
-    else
-        z $argv
-    end
 end
 
 # Setup tmuxifier

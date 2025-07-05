@@ -1,0 +1,123 @@
+#!/bin/bash
+
+# PAM Authentication Selector
+# Detects laptop lid state and creates appropriate PAM config
+
+# Determine config location based on privileges
+if [[ $EUID -ne 0 ]]; then
+    echo "Warning: Not running as root. Use 'sudo $0 $@' to actually modify PAM config."
+    CONFIG_DIR="$HOME/.local/share/pam-test"
+    COMMON_AUTH="$CONFIG_DIR/common-auth"
+    BACKUP_DIR="$CONFIG_DIR/backup"
+    mkdir -p "$CONFIG_DIR" "$BACKUP_DIR"
+    echo "Creating test config in: $CONFIG_DIR"
+else
+    CONFIG_DIR="/etc/pam.d"
+    COMMON_AUTH="$CONFIG_DIR/common-auth"
+    BACKUP_DIR="/etc/pam.d/backup"
+    # Ensure backup directory exists
+    mkdir -p "$BACKUP_DIR"
+fi
+
+# Ensure backup directory exists
+mkdir -p "$BACKUP_DIR"
+
+# Function to detect if laptop lid is open
+is_lid_open() {
+    # Check multiple possible lid state locations
+    local lid_states=(
+        "/proc/acpi/button/lid/LID/state"
+        "/proc/acpi/button/lid/LID0/state" 
+        "/proc/acpi/button/lid/*/state"
+    )
+    
+    for state_file in "${lid_states[@]}"; do
+        if [[ -f $state_file ]]; then
+            if grep -q "open" "$state_file" 2>/dev/null; then
+                return 0  # Lid is open
+            fi
+        elif [[ $state_file == *"*"* ]]; then
+            # Handle wildcard path
+            for f in $state_file; do
+                if [[ -f $f ]] && grep -q "open" "$f" 2>/dev/null; then
+                    return 0  # Lid is open
+                fi
+            done
+        fi
+    done
+    
+    # Fallback: check if built-in display is active
+    if command -v xrandr >/dev/null 2>&1; then
+        # Get built-in display names (common patterns)
+        local builtin_displays=$(xrandr | grep -E "(eDP|LVDS|DSI)" | grep " connected" | cut -d' ' -f1)
+        for display in $builtin_displays; do
+            if xrandr | grep "^$display" | grep -v "disconnected" >/dev/null; then
+                return 0  # Built-in display is connected/active
+            fi
+        done
+    fi
+    
+    return 1  # Assume lid is closed
+}
+
+# Function to create PAM config for open laptop
+create_open_config() {
+    cat > "$COMMON_AUTH" << 'EOF'
+#
+# /etc/pam.d/common-auth - authentication settings common to all services
+# Auto-generated config for OPEN laptop (fingerprint + password)
+#
+auth	[success=3 default=ignore]	pam_fprintd.so timeout=5
+auth	[success=2 default=ignore]	pam_unix.so nullok
+auth	[success=1 default=ignore]	pam_sss.so use_first_pass
+auth	requisite			pam_deny.so
+auth	required			pam_permit.so
+auth	optional			pam_cap.so 
+# end of pam-auth-update config
+EOF
+}
+
+# Function to create PAM config for closed laptop (clamshell mode)
+create_closed_config() {
+    cat > "$COMMON_AUTH" << 'EOF'
+#
+# /etc/pam.d/common-auth - authentication settings common to all services  
+# Auto-generated config for CLOSED laptop (Yubikey + password)
+#
+auth	sufficient	pam_u2f.so cue
+auth	[success=2 default=ignore]	pam_unix.so nullok
+auth	[success=1 default=ignore]	pam_sss.so use_first_pass
+auth	requisite			pam_deny.so
+auth	required			pam_permit.so
+auth	optional			pam_cap.so 
+# end of pam-auth-update config
+EOF
+}
+
+# Main logic
+case "${1:-auto}" in
+    "open")
+        echo "Forcing OPEN configuration (fingerprint + password)"
+        create_open_config
+        ;;
+    "closed")
+        echo "Forcing CLOSED configuration (Yubikey + password)"
+        create_closed_config
+        ;;
+    "auto"|*)
+        # Backup current config (only if running as root)
+        if [[ $EUID -eq 0 ]] && [[ -f "$COMMON_AUTH" ]]; then
+            cp "$COMMON_AUTH" "$BACKUP_DIR/common-auth.$(date +%Y%m%d_%H%M%S)"
+        fi
+        
+        if is_lid_open; then
+            echo "Laptop lid detected as OPEN - using fingerprint + password"
+            create_open_config
+        else
+            echo "Laptop lid detected as CLOSED - using Yubikey + password"
+            create_closed_config
+        fi
+        ;;
+esac
+
+echo "PAM configuration updated successfully"
