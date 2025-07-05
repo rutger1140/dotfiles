@@ -6,4 +6,7 @@ vim.filetype.add({
   pattern = {
     [".*%.blade%.php"] = "html",
   },
+  extension = {
+    erb = "eruby",
+  },
 })
