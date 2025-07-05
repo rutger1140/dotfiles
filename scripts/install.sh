@@ -169,6 +169,15 @@ echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud
 sudo apt update
 sudo apt install -y google-cloud-cli
 
+# PAM authentication setup
+# ########################
+if [[ -d "$HOME/.local/share/pam-auth-selector" ]]; then
+    echo "Setting up PAM authentication selector..."
+    cd "$HOME/.local/share/pam-auth-selector"
+    ./bin/install install
+    sudo ./bin/pam-auth-selector auto
+fi
+
 ########################################################
 # 3. Desktop
 ########################################################
