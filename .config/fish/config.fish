@@ -10,7 +10,7 @@ set -x EDITOR nvim
 
 # Note CLI 
 set -Ux NOTE_DIR "$HOME/Stack/Notes"
-set -Ux NOTE_EDITOR "nvim -c 'Neotree filesystem left dir=$NOTE_DIR'"
+set -Ux NOTE_EDITOR "nvim -c \"Neotree filesystem left dir=\$NOTE_DIR\" -c \"wincmd l\""
 
 # Add bin to path
 set -U fish_user_paths $HOME/bin $HOME/.local/bin $HOME/.lando/bin $HOME/.tmuxifier/bin $HOME/.local/share/pam-auth-selector/bin $fish_user_paths
