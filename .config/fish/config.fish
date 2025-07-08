@@ -8,6 +8,10 @@ end
 # Default editor
 set -x EDITOR nvim
 
+# Note CLI 
+set -Ux NOTE_DIR "$HOME/Stack/Notes"
+set -Ux NOTE_EDITOR "nvim -c 'Neotree filesystem left dir=$NOTE_DIR'"
+
 # Add bin to path
 set -U fish_user_paths $HOME/bin $HOME/.local/bin $HOME/.lando/bin $HOME/.tmuxifier/bin $HOME/.local/share/pam-auth-selector/bin $fish_user_paths
 
@@ -23,7 +27,6 @@ alias lt "eza --tree --level=2 --long --icons --git"
 alias lta "lt -a"
 alias ff "fzf --preview 'batcat --style=numbers --color=always {}'"
 alias fd fdfind
-#alias cd z
 alias tmf tmuxifier
 
 # Directories
@@ -32,12 +35,18 @@ alias ... "cd ../.."
 alias .... "cd ../../.."
 
 # Tools
-alias n nvim
+alias n note
 alias g git
 alias bat batcat
+alias cat "batcat --style=numbers --color=always"
 alias lzg lazygit
 alias lzd lazydocker
-alias sail "./vendor/bin/sail"
+
+# Note.sh extra shortcuts
+alias nn "note new"
+alias nl "note list"
+alias ne "note edit"
+alias ng "note grep"
 
 # Yarn
 alias y yarn

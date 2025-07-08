@@ -1,0 +1,181 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ -z ${NOTE_DIR+x} ]; then
+  echo "Error: Please configure and export NOTE_DIR environment variable."
+  echo "Example: export NOTE_DIR=\"\$HOME/Stack/Notes\""
+  exit 1
+fi
+
+# Use NOTE_EDITOR if set, fallback to EDITOR, then to vim
+if [ -n "${NOTE_EDITOR:-}" ]; then
+  EDITOR_CMD="$NOTE_EDITOR"
+else
+  EDITOR_CMD="${EDITOR:-vim}"
+fi
+
+function usage() {
+  echo "Usage: note [action] [options]"
+  echo
+  echo "  actions:"
+  echo "    (no args)           - Open today's note in inbox"
+  echo "    new [title] [area]  - Create new note with optional title and area"
+  echo "    edit [pattern]      - Edit note containing pattern"
+  echo "    grep [pattern]      - Search in all notes"
+  echo "    help                - Show this help"
+  echo
+  echo "  areas: inbox, projects, areas, resources, archive"
+  echo
+  echo "  examples:"
+  echo "    note                       # Open today's note"
+  echo "    note new \"meeting notes\"   # Create timestamped note in inbox"
+  echo "    note new \"project plan\" projects # Create note in projects"
+  echo "    note edit meeting          # Find and edit note containing 'meeting'"
+  echo "    note grep wifi             # Search for 'wifi' in all notes"
+}
+
+function create_note() {
+  local title="$1"
+  local area="${2:-inbox}"
+  local timestamp=$(date +'%Y-%m-%d-%H%M%S')
+  local filename
+  
+  # Validate area
+  case "$area" in
+    inbox|projects|areas|resources|archive) 
+      ;;
+    *)
+      echo "Invalid area: $area"
+      echo "Valid areas: inbox, projects, areas, resources, archive"
+      return 1
+      ;;
+  esac
+  
+  local target_dir="$NOTE_DIR/0-$area"
+  case "$area" in
+    projects) target_dir="$NOTE_DIR/1-projects" ;;
+    areas) target_dir="$NOTE_DIR/2-areas" ;;
+    resources) target_dir="$NOTE_DIR/3-resources" ;;
+    archive) target_dir="$NOTE_DIR/4-archive" ;;
+  esac
+  
+  mkdir -p "$target_dir"
+  
+  if [ -n "$title" ]; then
+    # Sanitize title for filename
+    local clean_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
+    filename="$timestamp-$clean_title.md"
+  else
+    filename="$timestamp-note.md"
+  fi
+  
+  local filepath="$target_dir/$filename"
+  
+  # Create note with basic header if it has a title
+  if [ -n "$title" ]; then
+    echo "# $title" > "$filepath"
+    echo "" >> "$filepath"
+    echo "Created: $(date +'%Y-%m-%d %H:%M:%S')" >> "$filepath"
+    echo "Area: $area" >> "$filepath"
+    echo "" >> "$filepath"
+  fi
+  
+  echo "Created: $area/$filename"
+  run_editor "$filepath"
+}
+
+function run_editor() {
+  local filepath="$1"
+  eval "$EDITOR_CMD \"$filepath\""
+}
+
+function edit_note() {
+  local pattern="$1"
+  local matches
+  
+  if [ -z "$pattern" ]; then
+    echo "Error: edit requires a search pattern"
+    echo "Usage: note edit [pattern]"
+    return 1
+  fi
+  
+  # Search in file content
+  matches=$(grep -r -l -i "$pattern" "$NOTE_DIR" --include="*.md" 2>/dev/null | head -10)
+  
+  if [ -z "$matches" ]; then
+    echo "No notes found containing: $pattern"
+    return 1
+  fi
+  
+  local count=$(echo "$matches" | wc -l)
+  
+  if [ "$count" -eq 1 ]; then
+    echo "Opening: $(basename "$matches")"
+    run_editor "$matches"
+  else
+    echo "Found $count notes containing '$pattern':"
+    echo "$matches" | sed "s|$NOTE_DIR/||" | nl
+    echo -n "Select note (1-$count): "
+    read -r choice
+    
+    if [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "$count" ]; then
+      local selected=$(echo "$matches" | sed -n "${choice}p")
+      echo "Opening: $(basename "$selected")"
+      run_editor "$selected"
+    else
+      echo "Invalid selection"
+      return 1
+    fi
+  fi
+}
+
+function search_notes() {
+  local pattern="$1"
+  echo "Searching for: $pattern"
+  echo "----------------------------------------"
+  grep -i -r -n --color=always "$pattern" "$NOTE_DIR" --include="*.md" || echo "No matches found"
+}
+
+# Create notes directory if it doesn't exist
+mkdir -p "$NOTE_DIR"
+
+# Main script logic
+case ${1:-""} in
+  "")
+    # Open today's note
+    today_file="$NOTE_DIR/0-inbox/$(date +'%Y-%m-%d').md"
+    
+    # Create header if file doesn't exist
+    if [ ! -f "$today_file" ]; then
+      mkdir -p "$(dirname "$today_file")"
+      echo "# $(date +'%Y-%m-%d')" > "$today_file"
+      echo "" >> "$today_file"
+    fi
+    
+    run_editor "$today_file"
+    ;;
+  new)
+    create_note "${2:-}" "${3:-}"
+    ;;
+  edit|e)
+    edit_note "${2:-}"
+    ;;
+  grep|search)
+    if [ $# -lt 2 ]; then
+      echo "Error: grep requires a search pattern"
+      echo "Usage: note grep [pattern]"
+      exit 1
+    fi
+    search_notes "$2"
+    ;;
+  help|--help|-h)
+    usage
+    ;;
+  *)
+    echo "Unknown action: $1"
+    echo
+    usage
+    exit 1
+    ;;
+esac
