@@ -35,10 +35,9 @@ alias ... "cd ../.."
 alias .... "cd ../../.."
 
 # Tools
-alias n note
+alias n nvim
 alias g git
-alias bat batcat
-alias cat "batcat --style=numbers --color=always"
+alias bat "batcat --style=numbers --color=always"
 alias lzg lazygit
 alias lzd lazydocker
 

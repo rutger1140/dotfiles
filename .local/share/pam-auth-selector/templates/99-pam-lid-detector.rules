@@ -1,9 +1,0 @@
-# Trigger PAM config update when lid state changes
-# Auto-generated from dotfiles template
-SUBSYSTEM=="platform", KERNEL=="PNP0C0D:*", ACTION=="change", RUN+="{{HOME}}/.local/share/pam-auth-selector/bin/pam-auth-selector auto"
-
-# Also trigger on ACPI events  
-SUBSYSTEM=="acpi", ACTION=="change", RUN+="{{HOME}}/.local/share/pam-auth-selector/bin/pam-auth-selector auto"
-
-# Trigger on display connection changes (for external monitors)
-SUBSYSTEM=="drm", ACTION=="change", RUN+="{{HOME}}/.local/share/pam-auth-selector/bin/pam-auth-selector auto"
