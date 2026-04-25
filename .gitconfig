@@ -1,3 +1,6 @@
+[core]
+  excludesfile = ~/.gitignore_global
+
 [user]
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRFsRZDmFKkMLp6RI42G7oP49C4HvIICvraXkcMT0W0
 
