@@ -8,6 +8,8 @@ Personal dotfiles for Arch Linux + [Omarchy](https://omarchy.org/), tracked with
 - `.gitignore_global` — wired in via `core.excludesfile`.
 - `.config/tmux/tmux.conf` — leader Ctrl-S, vim-keys, Catppuccin-flavoured status bar.
 - `.config/alacritty/alacritty.toml` — MonoLisa Variable, size 10.
+- `.config/ghostty/config` — MonoLisa Variable + stylistic-set features.
+- `.config/uwsm/default` — `TERMINAL=ghostty`, screenshot dir.
 - `.config/hypr/{input,bindings,monitors}.conf` — personal Hyprland configs.
 - `.config/fish/config.fish` and `.config/fish/functions/{dot,dcomposer}.fish`.
 - `.local/share/fonts/MonoLisaVariable*.ttf` — paid font.
