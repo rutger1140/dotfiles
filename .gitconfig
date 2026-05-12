@@ -2,7 +2,30 @@
   excludesfile = ~/.gitignore_global
 
 [user]
+  email = rutger.laurman@lemone.com
+  name = Rutger
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPRFsRZDmFKkMLp6RI42G7oP49C4HvIICvraXkcMT0W0
+
+[init]
+  defaultBranch = main
+
+[column]
+  ui = auto
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = version:refname
+
+[push]
+  autoSetupRemote = true
+  followTags = true
+
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
 
 [gpg]
   format = ssh
@@ -12,6 +35,7 @@
 
 [commit]
   gpgsign = true
+  verbose = true
 
 [alias]
   a = add
