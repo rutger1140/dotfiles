@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# vpn-tui — Proton VPN switcher with gum
+
+active=$(ip link show 2>/dev/null | grep -oE 'proton[a-z]+' | head -1)
+current="${active#proton}"
+[[ -z "$current" ]] && current="off"
+
+# fetch IP for header
+ip=$(curl -4 -s --max-time 3 https://icanhazip.com | tr -d '[:space:]')
+[[ -z "$ip" ]] && ip="unknown"
+
+gum style \
+    --foreground 212 --border-foreground 212 --border rounded \
+    --padding "1 2" --margin "1 0" --align center --width 40 \
+    "Proton VPN" "Status: $current" "IP: $ip"
+
+configs=$(sudo ls /etc/wireguard/ 2>/dev/null | grep -oP '(?<=proton)[a-z]+(?=\.conf)')
+
+options=()
+for c in $configs; do
+    if [[ "$c" == "$current" ]]; then
+        options+=("$c (active)")
+    else
+        options+=("$c")
+    fi
+done
+[[ -n "$active" ]] && options+=("disconnect")
+options+=("cancel")
+
+choice=$(printf "%s\n" "${options[@]}" | gum choose --header "Choose:")
+[[ -z "$choice" || "$choice" == "cancel" ]] && exit 0
+
+show_ip() {
+    new_ip=$(gum spin --spinner dot --title "Checking IP..." --show-output -- \
+        curl -4 -s --max-time 5 https://icanhazip.com | tr -d '[:space:]')
+    [[ -n "$new_ip" ]] && gum style --foreground 244 "IP: $new_ip"
+}
+
+case "$choice" in
+    "disconnect")
+        sudo wg-quick down "$active" >/dev/null 2>&1 \
+            && gum style --foreground 46 "✓ VPN disconnected"
+        show_ip
+        ;;
+    *"(active)")
+        gum style --foreground 220 "→ already active"
+        ;;
+    *)
+        [[ -n "$active" ]] && sudo wg-quick down "$active" >/dev/null 2>&1
+        if sudo wg-quick up "proton$choice" >/dev/null 2>&1; then
+            gum style --foreground 46 "✓ VPN connected: $choice"
+            show_ip
+        fi
+        ;;
+esac
+
+sleep 2
